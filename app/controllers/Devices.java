@@ -15,7 +15,7 @@ public class Devices extends Controller {
     }
 	
 	public static Result create() {
-		return ok(views.html.device.render(frm));		
+		return ok(views.html.device.render(frm, null));		
 	}
 	
 	public static Result submit() {
@@ -26,7 +26,9 @@ public class Devices extends Controller {
 		Device dev = Device.find.byId(id);
 		if (dev == null)
 			return notFound("ID not found.");
-		else
-			return ok(play.libs.Json.toJson(dev));
+		else {
+			frm.fill(dev);
+			return ok(views.html.device.render(frm, dev));
+		}	
 	}
 }

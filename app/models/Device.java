@@ -29,4 +29,8 @@ public class Device extends Model {
 	public static Finder<Long, Device> find = new Finder<Long, Device>(
 			Long.class, Device.class);
 	
+	public String validate() {
+		return null;
+	}
+
 }

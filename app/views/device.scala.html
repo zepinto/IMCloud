@@ -1,28 +1,32 @@
-@(signupForm: Form[Device])
+@(frm: Form[Device], dev: Device)
 
 @import helper._
 @import helper.twitterBootstrap._
 
-@main("Create new device") {
+@title = {
+    View / Edit device
+}
+
+@main(title, nav = "Devices") {
     
-    @helper.form(action = routes.Devices.submit) {
+    @form(action = routes.Devices.submit) {
         
         <fieldset>
             <legend>Create/Edit Device</legend>
             
             @inputText(
-                signupForm("name"), 
+                frm("name"), 
                 '_label -> "Name", 
                 '_help -> "Please provide a unique name."
             )
             
             @inputText(
-                signupForm("id"), '_label -> "Identifier",
+                frm("id"), '_label -> "Identifier",
                 '_help -> "Unique numeric id."
             )
             
             @inputText(
-                signupForm("iridiumImei"), 
+                frm("iridiumImei"), 
                 '_label -> "Iridium IMEI",
                 '_help -> "Provide an Iridium IMEI (if applicable)"
             )            
