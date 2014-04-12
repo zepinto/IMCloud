@@ -11,6 +11,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import play.Logger;
+import play.Play;
 import play.libs.WS;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
@@ -20,7 +21,7 @@ import com.avaje.ebean.QueryIterator;
 
 public class SpotUpdater implements CloudJob {
 
-	private static final String pageUrl = "https://api.findmespot.com/spot-main-web/consumer/rest-api/2.0/public/feed/0qQz420UTPODTjoHylgIOPa3RqqvOhkMK/latest.xml";
+	private static final String pageUrl = Play.application().configuration().getString("spot.url");
 
 	@Override
 	public FiniteDuration firstDelay() {
@@ -36,6 +37,10 @@ public class SpotUpdater implements CloudJob {
 	public void run() {
 		Logger.info("Fetching Spot positions");
 		
+		if (pageUrl == null) {
+			Logger.error("Please check that you have configured an 'spot.url' parameter.");
+			return;
+		}
 		try {
 			WS.Response r = WS.url(pageUrl).get().get(5, TimeUnit.SECONDS);
 			Document doc = r.asXml();
