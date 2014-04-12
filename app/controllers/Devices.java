@@ -10,9 +10,14 @@ public class Devices extends Controller {
 
 	final static Form<Device> frm = Form.form(Device.class);
 	
+	public static Result list() {
+        return ok(views.html.devlist.render(Device.find.all()));
+    }
+	
 	public static Result index() {
         return ok(Json.toJson(Device.find.all()));
     }
+	
 	
 	public static Result create() {
 		return ok(views.html.device.render(frm, null));		

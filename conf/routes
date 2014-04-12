@@ -6,6 +6,7 @@
 GET     /                           controllers.Application.index()
 
 GET     /devices                    controllers.Devices.index()
+GET     /devices/list               controllers.Devices.list()
 GET     /devices/create             controllers.Devices.create()
 POST    /devices/submit             controllers.Devices.submit()
 GET     /devices/:id                controllers.Devices.get(id: Long)
