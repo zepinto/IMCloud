@@ -24,13 +24,7 @@ public class Device extends Model {
 
 	public String iridiumImei;
 	
-	public DevicePosition lastPosition;
-	
-	public SysType deviceType = SysType.UNKNOWN;
-	
-	public enum SysType {
-		AUV, UAV, ASV, ROV, ARGOS, SPOT, MANTA, SHIP, CCU, UNKNOWN
-	}
+	public Long position;
 	
 	public static Finder<Long, Device> find = new Finder<Long, Device>(
 			Long.class, Device.class);

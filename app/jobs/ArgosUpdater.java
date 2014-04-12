@@ -112,16 +112,22 @@ public class ArgosUpdater implements CloudJob {
 				} 
 				else {
 					Device dev = devIt.next();
-					if (dev.lastPosition == null
-							|| dev.lastPosition.timestamp.before(dp.timestamp))
-						dev.lastPosition = dp;
-					dev.lastPosition = dp;
+					if (dev.position == null) {
+						dev.position = dp.id;
+						Logger.warn("Received first position for "+dev.name+".");
+					}
+					else {
+						DevicePosition prev = DevicePosition.find.byId(dev.position);
+						if (prev == null || prev.timestamp.before(dp.timestamp)) {
+							dev.position = dp.id;
+							Logger.warn("Position for "+dev.name+" was updated.");
+						}
+					}
 					Ebean.save(dev);
 				}
-				Ebean.endTransaction();
+				Ebean.commitTransaction();
 			}
 		} catch (Exception e) {
-
 		}
 	}
 

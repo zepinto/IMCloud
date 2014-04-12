@@ -7,8 +7,7 @@ create table device (
   id                        bigint not null,
   name                      varchar(255),
   iridium_imei              varchar(255),
-  device_type               integer,
-  constraint ck_device_device_type check (device_type in (0,1,2,3,4,5,6,7,8)),
+  position                  bigint,
   constraint pk_device primary key (id))
 ;
 
