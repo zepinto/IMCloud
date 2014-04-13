@@ -16,13 +16,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.QueryIterator;
-
 import play.Logger;
 import play.Play;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.QueryIterator;
+
 import fr.cls.argos.dataxmldistribution.service.DixService;
 import fr.cls.argos.dataxmldistribution.service.types.XmlRequestType;
 
@@ -113,13 +114,13 @@ public class ArgosUpdater implements CloudJob {
 				else {
 					Device dev = devIt.next();
 					if (dev.position == null) {
-						dev.position = dp.id;
+						dev.position = dp;
 						Logger.warn("Received first position for "+dev.name+".");
 					}
 					else {
-						DevicePosition prev = DevicePosition.find.byId(dev.position);
+						DevicePosition prev = dev.position;
 						if (prev == null || prev.timestamp.before(dp.timestamp)) {
-							dev.position = dp.id;
+							dev.position = dp;
 							Logger.warn("Position for "+dev.name+" was updated.");
 						}
 					}

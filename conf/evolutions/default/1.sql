@@ -7,7 +7,7 @@ create table device (
   id                        bigint not null,
   name                      varchar(255),
   iridium_imei              varchar(255),
-  position                  bigint,
+  position_id               bigint,
   constraint pk_device primary key (id))
 ;
 
@@ -35,6 +35,8 @@ create sequence device_position_seq;
 
 create sequence message_seq;
 
+alter table device add constraint fk_device_position_1 foreign key (position_id) references device_position (id) on delete restrict on update restrict;
+create index ix_device_position_1 on device (position_id);
 
 
 

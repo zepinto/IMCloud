@@ -79,7 +79,7 @@ public class SpotUpdater implements CloudJob {
 				}
 				else {
 					Device dev = devIt.next(); 
-					dev.position = dp.id;
+					dev.position = dp;
 					Ebean.save(dev);
 				}
 				Ebean.commitTransaction();				
