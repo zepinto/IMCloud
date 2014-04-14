@@ -1,6 +1,8 @@
 package models;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * This class is used to translate used 'Device' model to legacy Hub 'System' format
@@ -8,11 +10,13 @@ import java.text.SimpleDateFormat;
  *
  */
 public class System {
-	private static final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	public int imcid;
 	public String name;
 	public String imei = null;
-	public String created_at = "", updated_at = "";
+	
+	@JsonSerialize(using=DateTimeSerializer.class)
+	public Date created_at, updated_at;
+
 	public double[] coordinates = new double[]{0,0};
 	
 	public System(String name, int imcid) {
@@ -23,12 +27,12 @@ public class System {
 	public System(Device dev) {
 		this(dev.name, dev.id.intValue());
 		this.imei = dev.iridiumImei;
-		created_at = df.format(dev.created_at);
+		created_at = dev.created_at;
 		updated_at = created_at;
 		if (dev.position != null) {
 			coordinates[0] = dev.position.lat;
 			coordinates[1] = dev.position.lon;
-			updated_at = df.format(dev.position.timestamp);
+			updated_at = dev.position.timestamp;
 		}
 	}
 }

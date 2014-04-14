@@ -10,7 +10,8 @@ GET     /api/v1/systems             controllers.Devices.index()
 GET     /api/v1/systems/active      controllers.Devices.active()
 
 GET     /api/v1/iridium             controllers.Iridium.index()
-POST    /api/v1/iridium             controllers.Iridium.postRockBlock()
+POST    /api/v1/iridium             controllers.Iridium.post()
+POST    /rock7                      controllers.RockBlock.post()
 
 GET     /devices                    controllers.Devices.index()
 GET     /devices/delete/:id         controllers.Devices.delete(id: Long)

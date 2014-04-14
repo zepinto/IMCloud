@@ -5,10 +5,11 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * This class represents a position stored at IMCloud
@@ -25,8 +26,8 @@ public class DevicePosition extends Model {
 	@Constraints.Required
 	public double lat, lon;
 	
-	@Formats.DateTime(pattern="YYYYMMdd-HH:mm:ss")
 	@Required
+	@JsonSerialize(using=DateTimeSerializer.class)
 	public Date timestamp = new Date();
 	
 	public String positionClass = "Unknown";
