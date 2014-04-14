@@ -16,15 +16,13 @@
                 <div class="container">
                     <a class="brand" href="@routes.Application.index()">Home</a>
                     <ul class="nav">
+                         <li class="@("active".when(nav == "All Devices"))">
+                            <a href="@routes.Devices.list()">All Devices</a>
+                        </li>                          
                         <li class="@("active".when(nav == "Create Device"))">
                             <a href="@routes.Devices.create()">New Device</a>
                         </li>    
-                         <li class="@("active".when(nav == "All Devices"))">
-                            <a href="@routes.Devices.create()">New Device</a>
-                        </li>   
-                        <li class="@("active".when(nav == "Active Devices"))">
-                            <a href="@routes.Devices.create()">New Device</a>
-                        </li>                        
+                                                
                     </ul>
                 </div>
             </div>

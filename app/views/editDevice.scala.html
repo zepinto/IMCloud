@@ -10,7 +10,11 @@
 
 @main(title, nav = "Edit Device") {
 
-	<h1>Edit device</h1>
+	@if(newDevice) {
+    <h1>Add device</h1>
+	} else {
+    <h1>Edit device</h1>
+	}
 	@form(action = routes.Devices.submit()) {
         <fieldset>
         	@if(newDevice) {

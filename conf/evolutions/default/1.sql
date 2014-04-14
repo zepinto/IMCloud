@@ -21,6 +21,15 @@ create table device_position (
   constraint pk_device_position primary key (id))
 ;
 
+create table iridium_message (
+  id                        bigint not null,
+  type                      integer,
+  msg                       clob,
+  created_at                timestamp,
+  updated_at                timestamp,
+  constraint pk_iridium_message primary key (id))
+;
+
 create table message (
   id                        bigint not null,
   type                      integer,
@@ -33,6 +42,8 @@ create table message (
 create sequence device_seq;
 
 create sequence device_position_seq;
+
+create sequence iridium_message_seq;
 
 create sequence message_seq;
 
@@ -49,6 +60,8 @@ drop table if exists device;
 
 drop table if exists device_position;
 
+drop table if exists iridium_message;
+
 drop table if exists message;
 
 SET REFERENTIAL_INTEGRITY TRUE;
@@ -56,6 +69,8 @@ SET REFERENTIAL_INTEGRITY TRUE;
 drop sequence if exists device_seq;
 
 drop sequence if exists device_position_seq;
+
+drop sequence if exists iridium_message_seq;
 
 drop sequence if exists message_seq;
 

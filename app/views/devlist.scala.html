@@ -9,13 +9,17 @@
 
 @main(title, nav = "Home") {
     
-    <table class="table table-striped table-bordered table-condensed">
+    <table class="table table-striped table-condensed">
     <tr><th>Name</th><th>Id</th><th>IMEI</th><th>Position</th><th>Edit</th></tr>
 	@for(dev <- devices) {
 		<tr><td>@dev.name</td>
 		<td>@dev.id</td>
 		<td>@dev.iridiumImei</td>
-		<td>@dev.id</td>
+		@if(dev.position == null) {
+			<td></td>
+		} else {
+			<td>@dev.position.lat, @dev.position.lon</td>
+		}		
 		<td><a href="@routes.Devices.get(dev.id)">Edit</a></td>
 		</tr>
 	}
