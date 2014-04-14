@@ -17,6 +17,7 @@ create table device_position (
   lat                       double,
   lon                       double,
   timestamp                 timestamp,
+  device                    bigint,
   position_class            varchar(255),
   constraint pk_device_position primary key (id))
 ;

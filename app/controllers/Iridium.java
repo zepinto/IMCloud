@@ -64,26 +64,28 @@ public class Iridium extends Controller {
 		for (Position pos: msg.getPositions().values()) {
 			Device dev = Device.find.byId((long)pos.id);
 			if (dev == null) {
-				Logger.error("Received device update with if " + pos.id
-						+ " is unknown.");
+				Logger.error("Received device update with unknown id: "+String.format("0x%02X", pos.id)
+						+ ".");
 				continue;
 			}
 			DevicePosition dp = new DevicePosition();
-			dp.lat = pos.latitude;
-			dp.lon = pos.longitude;
+			dp.lat = Math.toDegrees(pos.latitude);
+			dp.lon = Math.toDegrees(pos.longitude);
 			dp.timestamp = new Date((long)(pos.timestamp * 1000));
 			dp.positionClass = "Unknown";
-			dp.save();
+			dp.device = pos.id;
 			if (dev.position == null) {
+				dp.save();
 				dev.position = dp;
 				Logger.warn("Received first position for "+dev.name+".");
 			}
 			else {
 				DevicePosition prev = dev.position;
 				if (prev == null || prev.timestamp.before(dp.timestamp)) {
+					dp.save();
 					dev.position = dp;
 					Logger.warn("Position for "+dev.name+" was updated.");
-				}
+				}				
 			}
 			Ebean.save(dev);
 		}

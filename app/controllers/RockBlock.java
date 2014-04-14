@@ -47,6 +47,6 @@ public class RockBlock extends Controller {
 		}
 		irMsg.save();
 		Iridium.processMessage(m);
-		return created(Json.toJson(irMsg));
+		return ok(Json.toJson(irMsg));
     }
 }

@@ -30,6 +30,9 @@ public class DevicePosition extends Model {
 	@JsonSerialize(using=DateTimeSerializer.class)
 	public Date timestamp = new Date();
 	
+	@Required
+	public long device;
+	
 	public String positionClass = "Unknown";
 	
 	public static Finder<Long, DevicePosition> find = new Finder<Long, DevicePosition>(

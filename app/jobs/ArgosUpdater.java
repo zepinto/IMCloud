@@ -103,8 +103,6 @@ public class ArgosUpdater implements CloudJob {
 				dp.timestamp = df.parse(date.replaceAll("T", " ").replaceAll(
 						"Z", ""));
 
-				Ebean.beginTransaction();
-				Ebean.save(dp);
 				QueryIterator<Device> devIt = Device.find.where()
 						.ilike("name", id).findIterate();
 				if (!devIt.hasNext()) {
@@ -115,18 +113,20 @@ public class ArgosUpdater implements CloudJob {
 					Device dev = devIt.next();
 					if (dev.position == null) {
 						dev.position = dp;
+						dp.device = dev.id;
 						Logger.warn("Received first position for "+dev.name+".");
 					}
 					else {
 						DevicePosition prev = dev.position;
 						if (prev == null || prev.timestamp.before(dp.timestamp)) {
 							dev.position = dp;
+							dp.device = dev.id;
 							Logger.warn("Position for "+dev.name+" was updated.");
 						}
 					}
+					Ebean.save(dp);
 					Ebean.save(dev);
 				}
-				Ebean.commitTransaction();
 			}
 		} catch (Exception e) {
 		}

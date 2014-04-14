@@ -71,18 +71,28 @@ public class SpotUpdater implements CloudJob {
 					}
 				}
 				
-				Ebean.beginTransaction();
-				Ebean.save(dp);
 				QueryIterator<Device> devIt = Device.find.where().ilike("name", device).findIterate();
 				if (!devIt.hasNext()) {
 					Logger.error("Found spot tag with name "+device+" is unknown.");		
 				}
 				else {
-					Device dev = devIt.next(); 
-					dev.position = dp;
+					Device dev = devIt.next();
+					if (dev.position == null) {
+						dev.position = dp;
+						dp.device = dev.id;
+						Logger.warn("Received first position for "+dev.name+".");
+					}
+					else {
+						DevicePosition prev = dev.position;
+						if (prev == null || prev.timestamp.before(dp.timestamp)) {
+							dev.position = dp;
+							dp.device = dev.id;
+							Logger.warn("Position for "+dev.name+" was updated.");
+						}
+					}
+					Ebean.save(dp);
 					Ebean.save(dev);
-				}
-				Ebean.commitTransaction();				
+				}		
 			}			
 		}
 		catch (Exception e) {

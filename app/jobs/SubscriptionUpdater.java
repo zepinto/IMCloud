@@ -1,16 +1,24 @@
 package jobs;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import play.Logger;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.duration.FiniteDuration;
+import controllers.Iridium;
 
 public class SubscriptionUpdater implements CloudJob {
 
+	private String lastSubscriber = null;
+	private Date lastSendDate = null;
+	
 	@Override
 	public void run() {
-		Logger.info("Update subscribers?");
+		if (Iridium.subscriber != null) {
+			if (!lastSubscriber.equals(Iridium.subscriber)) {
+				// iridium subscriber has changed... send all updates!
+			}
+		}
 	}
 
 	@Override

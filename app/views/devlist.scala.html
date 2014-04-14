@@ -13,7 +13,7 @@
     <tr><th>Name</th><th>Id</th><th>IMEI</th><th>Position</th><th>Edit</th></tr>
 	@for(dev <- devices) {
 		<tr><td>@dev.name</td>
-		<td>@dev.id</td>
+		<td>@String.format("0x%04x", dev.id)</td>
 		<td>@dev.iridiumImei</td>
 		@if(dev.position == null) {
 			<td></td>
