@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.ArrayList;
+
 import models.Device;
 import play.data.Form;
 import play.libs.Json;
@@ -15,7 +17,16 @@ public class Devices extends Controller {
     }
 	
 	public static Result index() {
-        return ok(Json.toJson(Device.find.all()));
+		
+		ArrayList<Device> devices = new ArrayList<Device>();
+		ArrayList<models.System> systems = new ArrayList<models.System>();
+		
+		devices.addAll(Device.find.all());
+		for (Device dev : devices) {
+			systems.add(new models.System(dev));
+		}
+		
+        return ok(Json.toJson(systems));
     }
 	
 	

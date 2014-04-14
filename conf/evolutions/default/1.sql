@@ -6,6 +6,7 @@
 create table device (
   id                        bigint not null,
   name                      varchar(255),
+  created_at                timestamp,
   iridium_imei              varchar(255),
   position_id               bigint,
   constraint pk_device primary key (id))

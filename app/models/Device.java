@@ -1,9 +1,12 @@
 package models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import play.data.format.Formats.DateTime;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
@@ -25,6 +28,10 @@ public class Device extends Model {
 	@Required
 	public String name;
 
+	@Required
+	@DateTime(pattern="yyyy-MM-dd'T'HH:mm:ss'Z'")
+	public Date created_at;
+	
 	public String iridiumImei;
 	
 	@OneToOne

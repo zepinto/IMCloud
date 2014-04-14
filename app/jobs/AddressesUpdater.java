@@ -1,5 +1,6 @@
 package jobs;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import models.Device;
@@ -48,9 +49,8 @@ public class AddressesUpdater implements CloudJob {
 					dev = new Device();
 					dev.id = (long)id;
 					dev.name = name;
-					Ebean.beginTransaction();
-					Ebean.save(dev);
-					Ebean.commitTransaction();					
+					dev.created_at = new Date();
+					Ebean.save(dev);				
 					Logger.warn("Added previously unknown device: "+name+" with id "+id);
 				}				
 			}
