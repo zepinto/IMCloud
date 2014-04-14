@@ -5,7 +5,13 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+# HUB URLs
+GET     /api/v1/systems             controllers.Devices.index()
+GET     /api/v1/systems/active      controllers.Devices.active()
+
 GET     /devices                    controllers.Devices.index()
+GET     /devices/delete/:id         controllers.Devices.delete(id: Long)
+GET     /devices/active             controllers.Devices.active()
 GET     /devices/list               controllers.Devices.list()
 GET     /devices/create             controllers.Devices.create()
 POST    /devices/submit             controllers.Devices.submit()

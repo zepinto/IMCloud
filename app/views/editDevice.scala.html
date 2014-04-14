@@ -1,0 +1,43 @@
+@(deviceForm: Form[Device], newDevice: Boolean, id: Long)
+
+@import helper._
+
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+
+@title = {
+    Edit device
+}
+
+@main(title, nav = "Edit Device") {
+
+	<h1>Edit device</h1>
+	@form(action = routes.Devices.submit()) {
+        <fieldset>
+        	@if(newDevice) {
+        		@inputText(deviceForm("id"), '_label -> "IMC ID")
+        	} else {
+        		@inputText(deviceForm("id"), '_label -> "IMC ID", '_disabled -> true)
+        	}
+            @inputText(deviceForm("name"), '_label -> "Device Name")
+            @inputText(deviceForm("iridiumImei"), '_label -> "Iridium IMEI")                       
+        
+        </fieldset>
+        
+        <div class="actions">
+        	@if(newDevice) {
+        	<input type="submit" value="Create this device" class="btn primary"> or
+        	} else {
+        	<input type="submit" value="Update this device" class="btn primary"> or
+        	}
+           	<a href="@routes.Devices.list()" class="btn">Cancel</a> 
+        </div>        
+    }
+    @if(!newDevice) {
+       	@form(routes.Devices.delete(id), 'class -> "topRight") {
+        	<input type="submit" value="Delete this device" class="btn danger">
+    	}        	
+	}
+}
+
+    
+
